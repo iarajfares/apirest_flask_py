@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/estilos.css">
+</head>
+<body>
+    <header id="header">
+    </header>
+    <main>
+        <div id="app">
+            <h3 class="titulo">Lista de Productos</h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrear" @click="nuevoProducto()">Nuevo producto</button>
+            <br>
+                <section class="tabla">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-success table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Imagen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="producto in productos" :key="producto.idproductos">
+                                    <td>{{ producto.idproductos }}</td>
+                                    <td>{{ producto.productos_name }}</td>
+                                    <td>{{ producto.productos_descripcion }}</td>
+                                    <td>{{ producto.productos_precio }}</td>
+                                    <td>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar" @click="editarProducto(producto.idproductos)">Editar</button>
+                                        <button class="btn btn-danger" @click="eliminarProducto(producto.idproductos)">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            <!-- MODAL DE EDITAR PRODUCTO  -->
+            <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="editar_productos_modal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="editar_productos_modal">Editar producto</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="nombre_producto" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre_producto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion_producto" class="form-label">Descripcion</label>
+                                <input type="text" class="form-control" id="descripcion_producto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="precio_producto" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="precio_producto">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL CREAR PRODUCTO  -->
+            <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="crear_productos_modal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="crear_productos_modal">Crear producto</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="nombre_producto" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre_producto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion_producto" class="form-label">Descripcion</label>
+                                <input type="text" class="form-control" id="descripcion_producto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="precio_producto" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="precio_producto">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL PARA ELIMINAR  -->
+    </div>
+    </main>
+    <footer>
+    </footer>
+    <!-- referencias a Vue.js y JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/productos.js"></script> 
+</body>
+</html>

@@ -1,12 +1,19 @@
 from flask import Flask,jsonify,request
 from flask_mysqldb import MySQL
+from flask_cors import CORS, cross_origin
 from config import config
+import os
+
+# Plantillas #
+
 
 app = Flask(__name__)
-
+CORS(app)
 conexion=MySQL(app)
 
+# Rutas de la app # 
 # Mostrar todos los productos # 
+@cross_origin
 @app.route('/productos', methods=['GET'])
 def listar_productos():
     try:
