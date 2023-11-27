@@ -65,11 +65,15 @@ def registrar_producto():
 def actualizar_producto(idproductos):
     try:
         cursor = conexion.connection.cursor()
-        sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' 
-        WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
-        cursor.execute(sql)
-        conexion.connection.commit() # confirma la accion de agregar
-        return jsonify({'mensaje':"Producto actualizado correctamente"})
+        # Verificar si el producto existe antes de intentar actualizar
+        if producto_existe(idproductos):
+            sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' 
+                     WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
+            cursor.execute(sql)
+            conexion.connection.commit()
+            return jsonify({'mensaje': "Producto actualizado correctamente"})
+        else:
+            return jsonify({'mensaje': "Producto no encontrado"})
     except Exception as ex:
         return jsonify({'mensaje':"error"})
 
@@ -78,13 +82,26 @@ def actualizar_producto(idproductos):
 def eliminar_producto(idproductos):
     try:
         cursor = conexion.connection.cursor()
-        sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
-        cursor.execute(sql)
-        conexion.connection.commit()
-        return jsonify({'mensaje': "Producto eliminado."})
+        if producto_existe(idproductos):
+            sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
+            cursor.execute(sql)
+            conexion.connection.commit()
+            return jsonify({'mensaje': "Producto eliminado"})
+        else:
+            return jsonify({'mensaje': "Producto no encontrado"})
     except Exception as ex:
         return jsonify({'mensaje': "Error"})
-
+# Funcion para verificar si existe un producto #    
+def producto_existe(idproductos):
+    try:
+        cursor = conexion.connection.cursor()
+        sql = "SELECT idproductos FROM productos WHERE idproductos = '{0}'".format(idproductos)
+        cursor.execute(sql)
+        return cursor.fetchone() is not None
+    except Exception as ex:
+        print("Error")
+        return False
+    
 if __name__ == '__main__':
     app.config.from_object(config['development'])
     app.register_error_handler(404, pagina_no_encontrada)
