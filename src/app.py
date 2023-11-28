@@ -44,6 +44,17 @@ def leer_producto(idproductos):
 def pagina_no_encontrada(error):
     return "<h1>Pagina no encontrada.</h1>", 404
 
+# Verificar si un producto existe. (REALIZADO POR MARY GALINDO, POR UN ERROR SE ELIMINO EL COMMIT.)
+def producto_existe(idproductos):
+    try:
+        cursor = conexion.connection.cursor()
+        sql = "SELECT idproductos FROM productos WHERE idproductos = '{0}'".format(idproductos)
+        cursor.execute(sql)
+        return cursor.fetchone() is not None
+    except Exception as ex:
+        print('Error')
+        return False 
+    
 # Agregar productos #
 @app.route('/productos', methods=['POST'])
 def registrar_producto():
@@ -62,11 +73,14 @@ def registrar_producto():
 def actualizar_producto(idproductos):
     try:
         cursor = conexion.connection.cursor()
-        sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' 
-        WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
-        cursor.execute(sql)
-        conexion.connection.commit() # confirma la accion de agregar
-        return jsonify({"Producto actualizado correctamente"})
+        if producto_existe(idproductos):
+            sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' 
+            WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
+            cursor.execute(sql)
+            conexion.connection.commit() # confirma la accion de agregar
+            return jsonify({"Producto actualizado correctamente"})
+        else:
+            return jsonify({"Producto no encontrado"})
     except Exception as ex:
         return jsonify({"Error"})
 
@@ -75,10 +89,13 @@ def actualizar_producto(idproductos):
 def eliminar_producto(idproductos):
     try:
         cursor = conexion.connection.cursor()
-        sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
-        cursor.execute(sql)
-        conexion.connection.commit()
-        return jsonify({"Producto eliminado."})
+        if producto_existe(idproductos):
+            sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
+            cursor.execute(sql)
+            conexion.connection.commit()
+            return jsonify({"Producto eliminado."})
+        else:
+            return jsonify({"Producto no encontrado"})
     except Exception as ex:
         return jsonify({"Error"})
 
