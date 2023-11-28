@@ -2,9 +2,6 @@ from flask import Flask,jsonify,request, url_for
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin
 from config import config
-import os
-
-# Plantillas #
 
 
 app = Flask(__name__)

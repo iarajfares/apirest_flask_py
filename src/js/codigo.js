@@ -1,4 +1,3 @@
-// const url = 'http://127.0.0.1:5000/productos'
 // DEFINIR VARIABLES //
 const modalCrear = new bootstrap.Modal(document.getElementById('modalCrear'));
 const formCrear = document.querySelector('#formCrear');
