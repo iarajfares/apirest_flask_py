@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request, url_for
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin
 from config import config
@@ -56,9 +56,9 @@ def registrar_producto():
         VALUES ('{0}', '{1}', '{2}', {3})""".format(request.json['idproductos'], request.json['productos_name'], request.json['productos_descripcion'], request.json['productos_precio'])
         cursor.execute(sql)
         conexion.connection.commit() # confirma la accion de agregar
-        return jsonify({'mensaje':"Producto registrado correctamente"})
+        return jsonify({"Producto registrado correctamente"})
     except Exception as ex:
-        return jsonify({'mensaje':"error"})
+        return jsonify({"Error"})
 
 # Actualizar productos #
 @app.route('/productos/<idproductos>', methods=['PUT'])
@@ -69,9 +69,9 @@ def actualizar_producto(idproductos):
         WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
         cursor.execute(sql)
         conexion.connection.commit() # confirma la accion de agregar
-        return jsonify({'mensaje':"Producto actualizado correctamente"})
+        return jsonify({"Producto actualizado correctamente"})
     except Exception as ex:
-        return jsonify({'mensaje':"error"})
+        return jsonify({"Error"})
 
 # Eliminar productos #
 @app.route('/productos/<idproductos>', methods=['DELETE'])
@@ -81,9 +81,9 @@ def eliminar_producto(idproductos):
         sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
         cursor.execute(sql)
         conexion.connection.commit()
-        return jsonify({'mensaje': "Producto eliminado."})
+        return jsonify({"Producto eliminado."})
     except Exception as ex:
-        return jsonify({'mensaje': "Error"})
+        return jsonify({"Error"})
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])

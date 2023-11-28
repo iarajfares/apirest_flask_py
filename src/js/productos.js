@@ -89,7 +89,7 @@ const app = Vue.createApp({
         this.obtenerProductos(); 
     }
 });
-
 app.mount('#app');
+
 
 

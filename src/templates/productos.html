@@ -6,6 +6,7 @@
     <title>Lista de Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/estilos.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 </head>
 <body>
     <header id="header">
@@ -13,7 +14,7 @@
     <main>
         <div id="app">
             <h3 class="titulo">Lista de Productos</h3>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrear" @click="nuevoProducto()">Nuevo producto</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" id="btnCrear">Nuevo producto</button>
             <br>
                 <section class="tabla">
                     <div class="table-responsive">
@@ -34,7 +35,7 @@
                                     <td>{{ producto.productos_descripcion }}</td>
                                     <td>{{ producto.productos_precio }}</td>
                                     <td>
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar" @click="editarProducto(producto.idproductos)">Editar</button>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button>
                                         <button class="btn btn-danger" @click="eliminarProducto(producto.idproductos)">Eliminar</button>
                                     </td>
                                 </tr>
@@ -52,23 +53,25 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="nombre_producto" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre_producto">
-                            </div>
-                            <div class="mb-3">
-                                <label for="descripcion_producto" class="form-label">Descripcion</label>
-                                <input type="text" class="form-control" id="descripcion_producto">
-                            </div>
-                            <div class="mb-3">
-                                <label for="precio_producto" class="form-label">Precio</label>
-                                <input type="number" class="form-control" id="precio_producto">
-                            </div>
+                            <form action="">
+                                <div class="mb-3">
+                                    <label for="nombre_producto" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control"  id="nombre_producto">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descripcion_producto" class="form-label">Descripcion</label>
+                                    <input type="text" class="form-control"  id="descripcion_producto">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precio_producto" class="form-label">Precio</label>
+                                    <input type="number" class="form-control"  id="precio_producto">
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Guardar cambios</button>
+                            <button type="button" class="btn btn-primary" @click="editarProducto(producto.idproductos)">Guardar cambios</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -81,23 +84,25 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="nombre_producto" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre_producto">
-                            </div>
-                            <div class="mb-3">
-                                <label for="descripcion_producto" class="form-label">Descripcion</label>
-                                <input type="text" class="form-control" id="descripcion_producto">
-                            </div>
-                            <div class="mb-3">
-                                <label for="precio_producto" class="form-label">Precio</label>
-                                <input type="number" class="form-control" id="precio_producto">
-                            </div>
+                            <form action="" id="formCrear">
+                                <div class="mb-3">
+                                    <label for="nombre_producto" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_producto">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descripcion_producto" class="form-label">Descripcion</label>
+                                    <input type="text" class="form-control" id="descripcion_producto">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precio_producto" class="form-label">Precio</label>
+                                    <input type="number" class="form-control" id="precio_producto">
+                                </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
-                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary" @click="nuevoProducto()">Guardar</button>
+                            </div>
+                            </form>
                     </div>
                 </div>
             </div>
@@ -110,8 +115,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/productos.js"></script> 
+    <script src="../js/codigo.js"></script>
 </body>
 </html>
