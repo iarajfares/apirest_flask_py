@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,request, url_for
+from flask import Flask,jsonify,request
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin
 from config import config
@@ -71,33 +71,33 @@ def registrar_producto():
 # Actualizar productos #
 @app.route('/productos/<idproductos>', methods=['PUT'])
 def actualizar_producto(idproductos):
-    try:
-        cursor = conexion.connection.cursor()
-        if producto_existe(idproductos):
+    if producto_existe(idproductos):
+        try:
+            cursor = conexion.connection.cursor()
             sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' 
             WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
             cursor.execute(sql)
             conexion.connection.commit() # confirma la accion de agregar
             return jsonify({"Producto actualizado correctamente"})
-        else:
-            return jsonify({"Producto no encontrado"})
-    except Exception as ex:
-        return jsonify({"Error"})
+        except Exception as ex:
+            return jsonify({"Error"})
+    else:
+        return jsonify({"Producto no encontrado"})
 
 # Eliminar productos #
 @app.route('/productos/<idproductos>', methods=['DELETE'])
 def eliminar_producto(idproductos):
-    try:
-        cursor = conexion.connection.cursor()
-        if producto_existe(idproductos):
+    if producto_existe(idproductos):
+        try:
+            cursor = conexion.connection.cursor()
             sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
             cursor.execute(sql)
             conexion.connection.commit()
-            return jsonify({"Producto eliminado."})
-        else:
-            return jsonify({"Producto no encontrado"})
-    except Exception as ex:
-        return jsonify({"Error"})
+            return jsonify(["Producto eliminado."])
+        except Exception as ex:
+            return jsonify(["Error"])
+    else:
+        return jsonify(["Producto no encontrado"])
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
