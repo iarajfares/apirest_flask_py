@@ -21,10 +21,10 @@ const app = Vue.createApp({
                 console.error('Error al obtener los productos:', error);
             }
         },
-        // EDITAR PRODUCTOS //
+        // // EDITAR PRODUCTOS //
         async editarProducto(idproductos) {
             try {
-                const id = this.productoEditado.idproductos
+                const idproductos = this.productoEditado.idproductos
                 const response = await fetch(`http://127.0.0.1:5000/productos/${idproductos}`, {
                     method: 'PUT',
                     headers: {
@@ -42,9 +42,13 @@ const app = Vue.createApp({
                 console.error('Error al editar el producto:', error);
             }
         },
-        // ELIMINAR PRODUCTOS //
-        eliminarProducto(idproductos) {
-            fetch(`http://127.0.0.1:5000/productos/${idproductos}`, {
+        // // ELIMINAR PRODUCTOS //
+        eliminarProducto(producto) {
+            const idproductos = producto.idproductos;
+            console.log('ID del producto a eliminar:', idproductos);
+            alertify.confirm("Confirmar", "¿Estás seguro de que quieres eliminar este producto?",
+            () => {
+                fetch(`http://127.0.0.1:5000/productos/${idproductos}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -58,31 +62,35 @@ const app = Vue.createApp({
             .catch(error => {
                 console.error('Error al eliminar el producto:', error);
             });
+            },
+            () => {
+                alertify.error("Cancelado");
+            });
         },
         // NUEVO PRODUCTO // 
         async nuevoProducto() {
-            try {
-                const response = await fetch('http://127.0.0.1:5000/productos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.nuevoProducto)
-                });
-                if (response.ok) {
-                    console.log('Producto agregado con éxito.');
-                    this.obtenerProductos();
-                    this.nuevoProducto = {
-                        nombre: '',
-                        descripcion: '',
-                        precio: 0,
-                    };
-                } else {
-                    console.error('Error al agregar el producto:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error al agregar el producto:', error);
-            }
+        //     try {
+        //         const response = await fetch('http://127.0.0.1:5000/productos', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify(this.nuevoProducto)
+        //         });
+        //         if (response.ok) {
+        //             console.log('Producto agregado con éxito.');
+        //             this.obtenerProductos();
+        //             this.nuevoProducto = {
+        //                 nombre: '',
+        //                 descripcion: '',
+        //                 precio: 0,
+        //             };
+        //         } else {
+        //             console.error('Error al agregar el producto:', response.statusText);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error al agregar el producto:', error);
+        //     }
         }
     },
     mounted() {

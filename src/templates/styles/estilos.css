@@ -18,3 +18,15 @@ body {
     text-decoration: none;
     color: black;
 }
+.ajs-button {
+    border: none;
+    border-radius: .5rem;
+}
+.ajs-ok {
+    background-color:#dc3545;
+    color: white;
+}
+.ajs-cancel {
+    background-color: #6EA8FE;
+    color: white;
+}
