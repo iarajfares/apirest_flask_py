@@ -44,7 +44,7 @@ def leer_producto(idproductos):
 def pagina_no_encontrada(error):
     return "<h1>Pagina no encontrada.</h1>", 404
 
-# Verificar si un producto existe. (REALIZADO POR MARY GALINDO, POR UN ERROR SE ELIMINO EL COMMIT.)
+# Verificar si un producto existe. (REALIZADO POR CYNTHIA FERNANDEZ, POR UN ERROR SE ELIMINO EL COMMIT.)
 def producto_existe(idproductos):
     try:
         cursor = conexion.connection.cursor()
@@ -64,9 +64,11 @@ def registrar_producto():
         VALUES ('{0}', '{1}', '{2}', {3})""".format(request.json['idproductos'], request.json['productos_name'], request.json['productos_descripcion'], request.json['productos_precio'])
         cursor.execute(sql)
         conexion.connection.commit() # confirma la accion de agregar
-        return jsonify({"Producto registrado correctamente"})
+        return jsonify({'Mensaje':"Producto registrado correctamente"})
     except Exception as ex:
-        return jsonify({"Error"})
+       print(f"Error: {ex}")
+       return jsonify({"Error": str(ex)})
+
 
 # Actualizar productos #
 @app.route('/productos/<idproductos>', methods=['PUT'])
@@ -78,9 +80,9 @@ def actualizar_producto(idproductos):
             WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
             cursor.execute(sql)
             conexion.connection.commit() # confirma la accion de agregar
-            return jsonify({"Producto actualizado correctamente"})
+            return jsonify({'Mensaje':"Producto actualizado correctamente"})
         else:
-            return jsonify({"Producto no encontrado"})
+            return jsonify({'Mensaje'"Producto no encontrado"})
     except Exception as ex:
         return jsonify({"Error"})
 
@@ -93,9 +95,9 @@ def eliminar_producto(idproductos):
             sql = "DELETE FROM productos WHERE idproductos = '{0}'".format(idproductos)
             cursor.execute(sql)
             conexion.connection.commit()
-            return jsonify({"Producto eliminado."})
+            return jsonify({'Mensaje':"Producto eliminado."})
         else:
-            return jsonify({"Producto no encontrado"})
+            return jsonify({'Mensaje':"Producto no encontrado"})
     except Exception as ex:
         return jsonify({"Error"})
 
