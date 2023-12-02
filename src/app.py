@@ -76,8 +76,8 @@ def actualizar_producto(idproductos):
     if producto_existe(idproductos):
         try:
             cursor = conexion.connection.cursor()
-            sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' 
-            WHERE idproductos = '{2}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['idproductos'])
+            sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' , productos_descripcion = '{2}'
+            WHERE idproductos = '{3}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['productos_descripcion'], request.json['idproductos'])
             cursor.execute(sql)
             conexion.connection.commit() # confirma la accion de agregar
             return jsonify({'Mensaje':"Producto actualizado correctamente"})
