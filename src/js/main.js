@@ -1,5 +1,5 @@
 document.getElementById("header").innerHTML= `
-<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #75B798"> 
+<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #A6DAD8; box-shadow: -1px 2px 7px 1px rgba(0,0,0,0.40);"> 
 <div class="container">
     <a class="navbar-brand" href="https://iarajfares.github.io/electrofive-cac/">Electro5</a>
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-label="Toggle navigation">
@@ -14,7 +14,7 @@ document.getElementById("header").innerHTML= `
                 <a class="nav-item dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: larger;">CRUD</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId" style="background-color: #D1E7DD">
                     <a class="dropdown-item" href="../templates/productos.html">Productos</a>
-                    <a class="dropdown-item" href="#">Action 2</a>
+                    <a class="dropdown-item" href="#">Usuarios</a>
                 </div>
             </li>
         </ul>
