@@ -42,7 +42,7 @@ def leer_producto(idproductos):
 def pagina_no_encontrada(error):
     return "<h1>Pagina no encontrada.</h1>", 404
 
-# Verificar si un producto existe. (REALIZADO POR MARY GALINDO, POR UN ERROR SE ELIMINO EL COMMIT.)
+# Verificar si un producto existe. (REALIZADO POR CYNTHIA FERNANDEZ, POR UN ERROR SE ELIMINO EL COMMIT.)
 def producto_existe(idproductos):
     try:
         cursor = conexion.connection.cursor()
@@ -90,7 +90,8 @@ def actualizar_producto(idproductos):
         except Exception as ex:
             return jsonify({'mensaje':"Error al actualizar"})
     else:
-        return jsonify({"Producto no encontrado"})
+        return jsonify({'Mensaje':"Producto no encontrado"})
+
 
 # Eliminar productos #
 @app.route('/productos/<idproductos>', methods=['DELETE'])
@@ -106,6 +107,7 @@ def eliminar_producto(idproductos):
             return jsonify(["Error"])
     else:
         return jsonify(["Producto no encontrado"])
+
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
