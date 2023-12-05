@@ -6,11 +6,9 @@ from config import config
 
 app = Flask(__name__)
 CORS(app)
-conexion=MySQL(app)
+conexion= MySQL(app)
 
-# Rutas de la app # 
 # Mostrar todos los productos # 
-@cross_origin
 @app.route('/productos', methods=['GET'])
 def listar_productos():
     try:
@@ -54,21 +52,24 @@ def producto_existe(idproductos):
     except Exception as ex:
         print('Error')
         return False 
-    
+
 # Agregar productos #
 @app.route('/productos', methods=['POST'])
 def registrar_producto():
     try:
         cursor = conexion.connection.cursor()
-        sql = """INSERT INTO productos (idproductos, productos_name, productos_descripcion, productos_precio) 
-        VALUES ('{0}', '{1}', '{2}', {3})""".format(request.json['idproductos'], request.json['productos_name'], request.json['productos_descripcion'], request.json['productos_precio'])
-        cursor.execute(sql)
-        conexion.connection.commit() # confirma la accion de agregar
-        return jsonify({'Mensaje':"Producto registrado correctamente"})
+        sql = """INSERT INTO productos (idproductos, productos_name, productos_descripcion, productos_precio)
+        VALUES (%s, %s, %s, %s)"""
+        cursor.execute(sql, (
+            request.form['idproductos'],
+            request.form['productos_name'],
+            request.form['productos_descripcion'],
+            request.form['productos_precio']
+        ))
+        conexion.connection.commit()
+        return jsonify({'mensaje':"producto registrado."})
     except Exception as ex:
-       print(f"Error: {ex}")
-       return jsonify({"Error": str(ex)})
-
+        return jsonify({'mensaje':"error"})
 
 # Actualizar productos #
 @app.route('/productos/<idproductos>', methods=['PUT'])
@@ -76,13 +77,18 @@ def actualizar_producto(idproductos):
     if producto_existe(idproductos):
         try:
             cursor = conexion.connection.cursor()
-            sql = """UPDATE productos SET productos_name = '{0}', productos_precio = '{1}' , productos_descripcion = '{2}'
-            WHERE idproductos = '{3}'""".format(request.json['productos_name'], request.json['productos_precio'], request.json['productos_descripcion'], request.json['idproductos'])
-            cursor.execute(sql)
+            sql = """UPDATE productos SET productos_name = %s, productos_descripcion = %s, productos_precio = %s 
+            WHERE idproductos = %s"""
+            cursor.execute(sql, {
+                request.form['productos_name'],
+                request.form['productos_descripcion'],
+                request.form['productos_precio'],
+                idproductos
+            })
             conexion.connection.commit() # confirma la accion de agregar
-            return jsonify({'Mensaje':"Producto actualizado correctamente"})
+            return jsonify({'mensaje':'Producto actualizado correctamente'})
         except Exception as ex:
-            return jsonify({"Error"})
+            return jsonify({'mensaje':"Error al actualizar"})
     else:
         return jsonify({'Mensaje':"Producto no encontrado"})
 

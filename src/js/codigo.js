@@ -6,11 +6,3 @@ const descripcionProducto = document.getElementById('descripcion_producto');
 const precioProducto = document.getElementById('precio_producto');
 const contenedor = document.querySelector('tbody')
 let opcion = ''
-
-btnCrear.addEventListener('click', ()=> {
-    nombreProducto.value = ''
-    descripcionProducto.value = ''
-    precioProducto.value = ''
-    modalCrear.show()
-    opcion = 'crear'
-})

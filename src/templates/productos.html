@@ -6,6 +6,7 @@
     <title>Lista de Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
 </head>
@@ -15,7 +16,50 @@
     <main>
         <div id="app">
             <h3 class="titulo">Lista de Productos</h3>
-            <button class="btn btn-primary" data-bs-toggle="modal" id="btnCrear">Nuevo producto</button>
+            <form action="" id="formCrear" @submit.prevent>
+                <h4>Agregar producto</h4>
+                <div class="mb-3">
+                    <label for="idproductos">ID</label>
+                    <input type="number" class="form-control" v-model="idproductos">
+                </div>
+                <div class="mb-3">
+                    <label for="productos_name">Nombre</label>
+                    <input type="text" class="form-control" v-model="productos_name">
+                </div>
+                <div class="mb-3">
+                    <label for="productos_descripcion">Descripcion</label>
+                    <input type="text" class="form-control" v-model="productos_descripcion">
+                </div>
+                <div class="mb-3">
+                    <label for="productos_precio">Precio</label>
+                    <input type="number" class="form-control" v-model="productos_precio">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="registrarProducto()">Guardar</button>
+                </div>
+            </form>
+            <form action="" id="formEditar" @submit.prevent>
+                <h4>Editar producto</h4>
+                <div class="mb-3">
+                    <label for="idproductos">ID</label>
+                    <input type="number" class="form-control" v-model="idproductos">
+                </div>
+                <div class="mb-3">
+                    <label for="productos_name">Nombre</label>
+                    <input type="text" class="form-control" v-model="productos_name">
+                </div>
+                <div class="mb-3">
+                    <label for="productos_descripcion">Descripcion</label>
+                    <input type="text" class="form-control" v-model="productos_descripcion">
+                </div>
+                <div class="mb-3">
+                    <label for="productos_precio">Precio</label>
+                    <input type="number" class="form-control" v-model="productos_precio">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="editarProducto()">Guardar</button>
+                </div>
+            </form>
             <br>
                 <section class="tabla">
                     <div class="table-responsive">
@@ -27,6 +71,7 @@
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Imagen</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,8 +80,9 @@
                                     <td>{{ producto.productos_name }}</td>
                                     <td>{{ producto.productos_descripcion }}</td>
                                     <td>{{ producto.productos_precio }}</td>
+                                    <td> {{ producto.imagen }}</td>
                                     <td>
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button>
+                                        <button class="btn btn-primary" @click="editarProducto(producto)">Editar</button>
                                         <button class="btn btn-danger" id="btnDelete" @click="eliminarProducto(producto)">Eliminar</button>
                                     </td>
                                 </tr>
@@ -45,76 +91,7 @@
                     </div>
                 </section>
             </div>
-            <!-- MODAL DE EDITAR PRODUCTO  -->
-            <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="editar_productos_modal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editar_productos_modal">Editar producto</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="">
-                                <div class="mb-3">
-                                    <label for="nombre_producto" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control"  id="nombre_producto">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descripcion_producto" class="form-label">Descripcion</label>
-                                    <input type="text" class="form-control"  id="descripcion_producto">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="precio_producto" class="form-label">Precio</label>
-                                    <input type="number" class="form-control"  id="precio_producto">
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary" @click="editarProducto(producto.idproductos)">Guardar cambios</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div> 
-            </div>
-            <!-- MODAL CREAR PRODUCTO  -->
-            <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="crear_productos_modal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="crear_productos_modal">Crear producto</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" id="formCrear">
-                                <div class="mb-3">
-                                    <label for="idproductos">ID</label>
-                                    <input type="number" class="form-control" id="idproductos">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nombre_producto" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre_producto">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descripcion_producto" class="form-label">Descripcion</label>
-                                    <input type="text" class="form-control" id="descripcion_producto">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="precio_producto" class="form-label">Precio</label>
-                                    <input type="number" class="form-control" id="precio_producto">
-                                </div>
-                        </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" @click="nuevoProducto()">Guardar</button>
-                            </div>
-                            </form>
-                    </div>
-                </div>
-            </div>
-            <!-- MODAL PARA ELIMINAR  -->
-    </div>
-    </main>
+        </main>
     <footer>
     </footer>
     <!-- referencias a Vue.js y JS -->

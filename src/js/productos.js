@@ -2,15 +2,34 @@ const app = Vue.createApp({
     data() {
         return {
             productos: [],
-            productoEditado: {
-                idproductos: 0,
-                nombre:'',
-                descripcion: '',
-                precio: 0
-            }
+            url: 'http://127.0.0.1:5000/productos',
+                idproductos: '',
+                productos_name:"",
+                productos_descripcion: "",
+                productos_precio:'',
+                imagen: ""
         }
     },
     methods: {
+        // CREAR PRODUCTOS //
+        registrarProducto() {
+            const formData = new FormData();
+            formData.append('idproductos', this.idproductos);
+            formData.append('productos_name', this.productos_name);
+            formData.append('productos_descripcion', this.productos_descripcion);
+            formData.append('productos_precio', this.productos_precio);
+            fetch('http://127.0.0.1:5000/productos', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.log('Error', error);
+            })
+        },
         // MOSTRAR PRODUCTOS //
         async obtenerProductos() {
             try {
@@ -22,25 +41,9 @@ const app = Vue.createApp({
             }
         },
         // // EDITAR PRODUCTOS //
-        async editarProducto(idproductos) {
-            try {
-                const idproductos = this.productoEditado.idproductos
-                const response = await fetch(`http://127.0.0.1:5000/productos/${idproductos}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.productoEditado)
-                });
-                if (response.ok) {
-                    console.log('Producto editado con éxito.');
-                    this.obtenerProductos();
-                } else {
-                    console.error('Error al editar el producto:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error al editar el producto:', error);
-            }
+        editarProducto(producto) {
+            const idproductos = producto.idproductos;
+            console.log('ID del producto a editar:', idproductos)
         },
         // // ELIMINAR PRODUCTOS //
         eliminarProducto(producto) {
@@ -67,31 +70,6 @@ const app = Vue.createApp({
                 alertify.error("Cancelado");
             });
         },
-        // NUEVO PRODUCTO // 
-        async nuevoProducto() {
-        //     try {
-        //         const response = await fetch('http://127.0.0.1:5000/productos', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify(this.nuevoProducto)
-        //         });
-        //         if (response.ok) {
-        //             console.log('Producto agregado con éxito.');
-        //             this.obtenerProductos();
-        //             this.nuevoProducto = {
-        //                 nombre: '',
-        //                 descripcion: '',
-        //                 precio: 0,
-        //             };
-        //         } else {
-        //             console.error('Error al agregar el producto:', response.statusText);
-        //         }
-        //     } catch (error) {
-        //         console.error('Error al agregar el producto:', error);
-        //     }
-        }
     },
     mounted() {
         this.obtenerProductos(); 

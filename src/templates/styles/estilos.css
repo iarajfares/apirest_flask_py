@@ -1,22 +1,29 @@
 body {
-    background-color: rgb(206, 243, 231);
+    background-color: #A6DAD8;
+    font-family: 'Montserrat', sans-serif;
 }
 .titulo {
     display: flex;
     justify-content: center;
     margin: .5rem;
+    margin-top: 1rem;
 }
 .btn {
     margin: .5rem;
 }
 .tabla {
-    margin: .5rem;
+    margin: 5rem;
+    text-align: center;
 }
 .nav-item {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: black;
+}
+#formCrear {
+    margin-left: 5rem;
+    margin-right: 5rem;
 }
 .ajs-button {
     border: none;
