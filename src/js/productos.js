@@ -25,6 +25,7 @@ const app = Vue.createApp({
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                location.reload();
             })
             .catch(error => {
                 console.log('Error', error);
@@ -41,10 +42,10 @@ const app = Vue.createApp({
             }
         },
         // // EDITAR PRODUCTOS //
-        editarProducto(producto) {
-            const idproductos = producto.idproductos;
-            console.log('ID del producto a editar:', idproductos)
-        },
+        redirigir(id) {
+            // Redirige a la página de edición con el ID como parámetro
+            window.location.href = 'editar.html?id=' + id;
+        },   
         // // ELIMINAR PRODUCTOS //
         eliminarProducto(producto) {
             const idproductos = producto.idproductos;
