@@ -9,6 +9,7 @@ CORS(app)
 conexion= MySQL(app)
 
 # Mostrar todos los productos # 
+@cross_origin
 @app.route('/productos', methods=['GET'])
 def listar_productos():
     try:
@@ -22,7 +23,8 @@ def listar_productos():
             productos.append(producto)
         return jsonify({'Productos':productos, 'Mensaje':"Productos disponibles"})
     except Exception as ex:
-        return jsonify({'Mensaje':"Error"})
+       print(f"Error: {ex}")
+       return jsonify({"Error": str(ex)})
 
 # Mostrar un solo producto por ID #
 @app.route('/productos/<idproductos>', methods=['GET'])
@@ -79,18 +81,20 @@ def actualizar_producto(idproductos):
             cursor = conexion.connection.cursor()
             sql = """UPDATE productos SET productos_name = %s, productos_descripcion = %s, productos_precio = %s 
             WHERE idproductos = %s"""
-            cursor.execute(sql, {
-                request.form['productos_name'],
-                request.form['productos_descripcion'],
-                request.form['productos_precio'],
+            cursor.execute(sql, (
+                request.json['productos_name'],
+                request.json['productos_descripcion'],
+                request.json['productos_precio'],
                 idproductos
-            })
+            ))
             conexion.connection.commit() # confirma la accion de agregar
             return jsonify({'mensaje':'Producto actualizado correctamente'})
         except Exception as ex:
-            return jsonify({'mensaje':"Error al actualizar"})
+           print(f"Error: {ex}")
+           return jsonify({"Error": str(ex)})
     else:
         return jsonify({'Mensaje':"Producto no encontrado"})
+
 
 
 # Eliminar productos #
