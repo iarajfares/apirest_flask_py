@@ -13,8 +13,6 @@ createApp({
             productos_descripcion: "",
             productos_precio:'',
             imagen: "",
-
-            //url:'http://127.0.0.1:5000/productos/' + id, //ruta local
             url: 'http://127.0.0.1:5000/productos/' + id,
         }
     },
@@ -51,21 +49,18 @@ createApp({
             }
             console.log('Datos a enviar:', JSON.stringify(producto));
             fetch(this.url, options)
-        .then(function(response) {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(function(data) {
-            console.log('Respuesta del servidor:', data);
-            alert("Registro modificado");
-            window.location.href = "./productos.html";
-        })
-        .catch(function(error) {
-            console.error('Error en la solicitud:', error);
-            alert("Error al Modificar");
-        });
+            .then (response => {
+                if (response.ok) {
+                    console.log('Producto editado con éxito.');
+                    alertify.success('Producto editado con éxito.');
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(function(error) {
+                console.error('Error en la solicitud:', error);
+                alertify.error("Error al editar producto.");
+            });
         }
     },
     created() {

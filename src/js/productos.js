@@ -58,6 +58,7 @@ const app = Vue.createApp({
             .then(response => {
                 if (response.ok) {
                     console.log('Producto eliminado con éxito.');
+                    alertify.success('Producto eliminado con éxito.'); 
                     this.obtenerProductos();
                 } else {
                     console.error('Error al eliminar el producto:', response.statusText);

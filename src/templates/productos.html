@@ -60,7 +60,7 @@
                                     <td>{{ producto.productos_precio }}</td>
                                     <td> {{ producto.imagen }}</td>
                                     <td>
-                                        <button @click="redirigir(producto.idproductos)" class="btn btn-primary">Editar</button>
+                                        <button @click="redirigir(producto.idproductos)" class="btn btn-primary" id="btnEditar">Editar</button>
                                         <button class="btn btn-danger" id="btnDelete" @click="eliminarProducto(producto)">Eliminar</button>
                                     </td>
                                 </tr>

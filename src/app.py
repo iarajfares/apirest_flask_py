@@ -90,8 +90,8 @@ def actualizar_producto(idproductos):
             conexion.connection.commit() # confirma la accion de agregar
             return jsonify({'mensaje':'Producto actualizado correctamente'})
         except Exception as ex:
-           print(f"Error: {ex}")
-           return jsonify({"Error": str(ex)})
+            print(f"Error: {ex}")
+            return jsonify({"Error": str(ex)})
     else:
         return jsonify({'Mensaje':"Producto no encontrado"})
 

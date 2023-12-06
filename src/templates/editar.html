@@ -15,24 +15,20 @@
     </header>
     <main>
         <div id="app">
-            <h3 class="titulo">Editar Productos</h3>
+            <h3 class="titulo">Editar Productos </h3>
             <form action="" id="formEditar" @submit.prevent>
                 <h4>Editar producto</h4>
-               <!--<div class="mb-3">
-                    <label for="idproductos">ID</label>
-                    <input type="number" class="form-control" disable v-model="idproductos">
-                </div> --> 
                 <div class="mb-3">
                     <label for="productos_name">Nombre</label>
-                    <input type="text" class="form-control" v-model="productos_name">
+                    <input type="text" id="editarNombre" class="form-control" v-model="productos_name">
                 </div>
                 <div class="mb-3">
                     <label for="productos_descripcion">Descripcion</label>
-                    <input type="text" class="form-control" v-model="productos_descripcion">
+                    <input type="text" id="editarDescripcion" class="form-control" v-model="productos_descripcion">
                 </div>
                 <div class="mb-3">
                     <label for="productos_precio">Precio</label>
-                    <input type="number" class="form-control" v-model="productos_precio">
+                    <input type="number" id="editarPrecio" class="form-control" v-model="productos_precio">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" @click="modificar()">Guardar</button>
