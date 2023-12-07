@@ -23,8 +23,8 @@ def listar_productos():
             productos.append(producto)
         return jsonify({'Productos':productos, 'Mensaje':"Productos disponibles"})
     except Exception as ex:
-       print(f"Error: {ex}")
-       return jsonify({"Error": str(ex)})
+        print(f"Error: {ex}")
+        return jsonify({"Error": str(ex)})
 
 # Mostrar un solo producto por ID #
 @app.route('/productos/<idproductos>', methods=['GET'])
