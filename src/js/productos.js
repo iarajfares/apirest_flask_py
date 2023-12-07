@@ -2,7 +2,7 @@ const app = Vue.createApp({
     data() {
         return {
             productos: [],
-            url: 'http://127.0.0.1:5000/productos',
+            url: 'https://electro5.pythonanywhere.com/productos',
                 idproductos: '',
                 productos_name:"",
                 productos_descripcion: "",
@@ -18,7 +18,7 @@ const app = Vue.createApp({
             formData.append('productos_name', this.productos_name);
             formData.append('productos_descripcion', this.productos_descripcion);
             formData.append('productos_precio', this.productos_precio);
-            fetch('http://127.0.0.1:5000/productos', {
+            fetch('https://electro5.pythonanywhere.com/productos' , {
                 method: 'POST',
                 body: formData
             })
@@ -34,7 +34,7 @@ const app = Vue.createApp({
         // MOSTRAR PRODUCTOS //
         async obtenerProductos() {
             try {
-                const response = await fetch('http://127.0.0.1:5000/productos');
+                const response = await fetch('https://electro5.pythonanywhere.com/productos');
                 const data = await response.json();
                 this.productos = data.Productos;
             } catch (error) {
@@ -52,7 +52,7 @@ const app = Vue.createApp({
             console.log('ID del producto a eliminar:', idproductos);
             alertify.confirm("Confirmar", "¿Estás seguro de que quieres eliminar este producto?",
             () => {
-                fetch(`http://127.0.0.1:5000/productos/${idproductos}`, {
+                fetch(`https://electro5.pythonanywhere.com/productos/${idproductos}`, {
                 method: 'DELETE'
             })
             .then(response => {

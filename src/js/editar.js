@@ -13,7 +13,7 @@ createApp({
             productos_descripcion: "",
             productos_precio:'',
             imagen: "",
-            url: 'http://127.0.0.1:5000/productos/' + id,
+            url: 'https://electro5.pythonanywhere.com/productos/' + id,
         }
     },
     methods: {
